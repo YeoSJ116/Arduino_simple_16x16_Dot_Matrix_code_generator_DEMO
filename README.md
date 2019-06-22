@@ -1,8 +1,7 @@
 # Arduino simple 16x16 Dot Matrix code generator DEMO
 
 ### Youtube link
-
-![https://img.youtube.com/vi/_TUJyRHIBNs/0.jpg](https://youtu.be/_TUJyRHIBNs)
+[![Programe testing video was uploaded on youtube](https://img.youtube.com/vi/_TUJyRHIBNs/0.jpg)](https://www.youtube.com/watch?v=_TUJyRHIBNs)
 
 
 
