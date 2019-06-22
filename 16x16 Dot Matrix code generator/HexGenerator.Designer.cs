@@ -445,6 +445,7 @@
             this.Info.TabIndex = 1;
             this.Info.Text = "Info";
             this.Info.UseVisualStyleBackColor = true;
+            this.Info.Click += new System.EventHandler(this.Info_Click);
             // 
             // LogTbox
             // 

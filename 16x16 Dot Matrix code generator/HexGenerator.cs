@@ -7,6 +7,7 @@ using static System.IO.Directory;
 /* If you can't understand korean language?
  * Tell me know it on Github Issues page!
  * I will help you ;)
+ * Github Issues URL: https://github.com/YeoSJ116/Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO
  * 
  * 20119.06.22 Release open-source 1.0.0 BY YeoSJ116
  */
@@ -14,6 +15,9 @@ namespace Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO
 {
     public partial class HexGenerator : Form
     {
+        //프로그램에 대한 정보를 표시하기 위해 재작자의 깃 허브로 이동 합니다.
+        private void Info_Click(object sender, EventArgs e) => System.Diagnostics.Process.Start("https://github.com/YeoSJ116/Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO");
+
         string enter = "\r\n";
         string AutoSaveFileName = ""; //런타임 중에(실행 중에) 이 변수에 자동 저장시 저장할 파일 이름을 지정 합니다.
         int countSave = 1; //비트맵 저장시 자동으로 뒤에 숫자가 붙도록 하기위한 변수 입니다.
