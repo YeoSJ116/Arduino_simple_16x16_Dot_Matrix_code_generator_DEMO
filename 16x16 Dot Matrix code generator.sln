@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "16x16 Dot Matrix code generator", "16x16 Dot Matrix code generator\16x16 Dot Matrix code generator.csproj", "{A9F26F5A-C337-41FA-8A2C-C4D1D790CEFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9F26F5A-C337-41FA-8A2C-C4D1D790CEFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9F26F5A-C337-41FA-8A2C-C4D1D790CEFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9F26F5A-C337-41FA-8A2C-C4D1D790CEFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9F26F5A-C337-41FA-8A2C-C4D1D790CEFD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {200C8376-6E6F-436F-B24A-5BDD192F3994}
+	EndGlobalSection
+EndGlobal
