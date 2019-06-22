@@ -7,7 +7,7 @@ using static System.IO.Directory;
 /* If you can't understand korean language?
  * Tell me know it on Github Issues page!
  * I will help you ;)
- * Github Issues URL: https://github.com/YeoSJ116/Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO
+ * Github Issues (Q&A) URL: https://github.com/YeoSJ116/Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO/issues
  * 
  * 20119.06.22 Release open-source 1.0.0 BY YeoSJ116
  */
