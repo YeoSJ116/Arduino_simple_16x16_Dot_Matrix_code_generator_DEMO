@@ -1,7 +1,10 @@
 # Arduino simple 16x16 Dot Matrix code generator DEMO
 
 ### Youtube link
+Programe testing video was uploaded on youtube!
+Click the image to go to my Youtube video link :
 [![Programe testing video was uploaded on youtube](https://img.youtube.com/vi/_TUJyRHIBNs/0.jpg)](https://www.youtube.com/watch?v=_TUJyRHIBNs)
+
 
 
 
@@ -9,8 +12,11 @@
 ### My Blogs
 
 [NAVER Blog (Kor) 이론 설명](https://blog.naver.com/yeosj116/221238126266)
+
 [NAVER Blog (Kor) 부가 참조](https://blog.naver.com/yeosj116/221226767663)
+
 [Github Blog (EN)](https://yeosj116.github.io/)
+
 
 
 
@@ -20,6 +26,7 @@
 [H/W Assemble & Design: Hanbitz414](https://blog.naver.com/hanbitz414)
 
 [Arduino source code: Thai Easy Elec](https://www.thaieasyelec.com/article-wiki/review-product-article/moving-sign-display-with-led-dot-matrix-16x16.html)
+
 
 
 
