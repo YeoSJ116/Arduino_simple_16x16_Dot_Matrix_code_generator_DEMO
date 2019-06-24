@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO</RootNamespace>
-    <AssemblyName>Arduino simple 16x16 Dot Matrix code generator DEMO</AssemblyName>
+    <AssemblyName>Arduino 16x16 Dot Matrix</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

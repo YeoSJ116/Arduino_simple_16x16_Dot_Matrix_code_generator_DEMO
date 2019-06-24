@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "16x16 Dot Matrix code generator", "16x16 Dot Matrix code generator\16x16 Dot Matrix code generator.csproj", "{A9F26F5A-C337-41FA-8A2C-C4D1D790CEFD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Open-source", "Open-source\Open-source.csproj", "{A9F26F5A-C337-41FA-8A2C-C4D1D790CEFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {200C8376-6E6F-436F-B24A-5BDD192F3994}
+		SolutionGuid = {E2C44AF4-4411-45DF-93D3-3FAE561E42F2}
 	EndGlobalSection
 EndGlobal
