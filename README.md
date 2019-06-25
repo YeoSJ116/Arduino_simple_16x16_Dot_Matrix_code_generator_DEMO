@@ -1,5 +1,17 @@
 # Arduino simple 16x16 Dot Matrix code generator DEMO
 
+### Build (Visual studio C# required)
+1. [Download open-source zip file](https://github.com/YeoSJ116/Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO/archive/master.zip)
+2. Unzip this zip file.
+3. Double click "Open-source.sln"(Visual studio solution) file.
+4. Build(F5) or enjoy the this open-source!
+
+### Just execute
+1. [Download open-source zip file](https://github.com/YeoSJ116/Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO/archive/master.zip)
+2. Unzip this zip file.
+3. Find "Build virzion"file.
+4. Execute programe.
+
 ### Youtube link
 Programe testing video was uploaded on youtube!
 
