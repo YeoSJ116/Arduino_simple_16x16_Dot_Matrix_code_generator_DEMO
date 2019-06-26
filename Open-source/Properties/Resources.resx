@@ -119,18 +119,15 @@
   </resheader>
   <data name="Footer" xml:space="preserve">
     <value>
-unsigned char Display_Buffer[ Display_Num_Word * 2 ];
-unsigned char Display_Swap_Buffer[ Display_Num_Word ][ 32 ];
-bool Shift_Bit = 0,            // SPI detail config
-     Flag_Shift = 0;
-unsigned int Timer0_Count = 0, // Count var is must be 0
-             Shift_Count = 0,
+unsigned char Display_Buffer[ Display_Num_Word * 2 ],
+              Display_Swap_Buffer[ Display_Num_Word ][ 32 ];
+bool Shift_Bit = 0;            // SPI detail config
+unsigned int Shift_Count = 0,  // Count var is must be 0
              Display_Word_Count = 0;
 unsigned char Message_index = 0;
 unsigned char temp = 0x80;
 
-void setup()
-{
+void setup(){
     SPI.begin();
     SPI.setBitOrder( LSBFIRST );           // LSBFIRST &lt;-&gt; MSBFIRST
     SPI.setClockDivider( SPI_CLOCK_DIV2 ); // 16MHz/16 -&gt; 1MHz SCK frequency
@@ -146,8 +143,7 @@ void setup()
     Clear_Display();
 }
 
-void loop()
-{
+void loop(){
     Display( Display_Swap_Buffer );  
     Calc_Shift( Display_Num_Word,DP_Buffer );
     Shift_Count++;
@@ -155,30 +151,23 @@ void loop()
     if( Shift_Count % 16 == 0 )
         Message_index++;
 
-    if( Message_index &gt; ( serial_index - 1 ))
+    if( Message_index &gt; ( text_count - 1 ))
         Message_index = 0;
 }
 
-void Clear_Display()
-{
-    unsigned char i, j;
-    for(j = 0; j &lt; Display_Num_Word; j++)
-        for(i = 0 ; i &lt; 32 ;i++)
+void Clear_Display(){
+    for(unsigned char j = 0; j &lt; Display_Num_Word; j++)
+        for(unsigned char i = 0 ; i &lt; 32 ;i++)
             Display_Swap_Buffer[j][i] = 0xFF;
 }
 
-void Calc_Shift(unsigned int Display, unsigned char sendingBuffer[200])
-{
-    unsigned char i,j;
-
-    for(i = 0; i &lt; 16; i++)
-    {
+void Calc_Shift(unsigned int Display, unsigned char sendingBuffer[200]){
+    for(unsigned char i = 0; i &lt; 16; i++){
         if((Display_Swap_Buffer[0][16+i]&amp;0x80) == 0)
             Display_Swap_Buffer[0][i] = ( Display_Swap_Buffer[0][i] &lt;&lt; 1 ) &amp; 0xfe;
         else
             Display_Swap_Buffer[0][i] = ( Display_Swap_Buffer[0][i] &lt;&lt; 1 ) | 0x01;
-        for( j = 1; j &lt; Display; j++ )
-        {
+        for(unsigned char j = 1; j &lt; Display; j++ ){
             if((Display_Swap_Buffer[j][i] &amp; 0x80) == 0)
                 Display_Swap_Buffer[j-1][16+i] = (Display_Swap_Buffer[j-1][16+i] &lt;&lt; 1) &amp; 0xfe;
             else
@@ -189,35 +178,29 @@ void Calc_Shift(unsigned int Display, unsigned char sendingBuffer[200])
             else
                 Display_Swap_Buffer[j][i] = (Display_Swap_Buffer[j][i] &lt;&lt; 1) | 0x01;
         }
-    }
     
-    if( Shift_Count % 16 &lt; 8 &amp;&amp; Display_Word_Count &lt; Num_Of_Word )
-        Shift_Bit = pgm_read_word((&amp;Word[sendingBuffer[Message_index]][i])) &amp; temp;
-    else if(Shift_Count%16 &lt; 16 &amp;&amp; Display_Word_Count &lt; Num_Of_Word)
-        Shift_Bit = pgm_read_word((&amp;Word[sendingBuffer[Message_index]][16+i])) &amp; temp;
-    else
-        Shift_Bit = 1;
+        if( Shift_Count % 16 &lt; 8 &amp;&amp; Display_Word_Count &lt; Num_Of_Word )
+            Shift_Bit = pgm_read_word((&amp;Word[sendingBuffer[Message_index]][i])) &amp; temp;
+        else if(Shift_Count%16 &lt; 16 &amp;&amp; Display_Word_Count &lt; Num_Of_Word)
+            Shift_Bit = pgm_read_word((&amp;Word[sendingBuffer[Message_index]][16+i])) &amp; temp;
+        else
+            Shift_Bit = 1;
 
-    if(Shift_Bit == 0)
-        Display_Swap_Buffer[Display-1][16+i] = (Display_Swap_Buffer[Display-1][16+i] &lt;&lt; 1) &amp; 0xfe;
-    else
-    {
-        Shift_Bit = 1;
-        Display_Swap_Buffer[Display-1][16+i] = (Display_Swap_Buffer[Display-1][16+i] &lt;&lt; 1) | 0x01;
+        if(Shift_Bit == 0)
+            Display_Swap_Buffer[Display-1][16+i] = (Display_Swap_Buffer[Display-1][16+i] &lt;&lt; 1) &amp; 0xfe;
+        else{
+            Shift_Bit = 1;
+            Display_Swap_Buffer[Display-1][16+i] = (Display_Swap_Buffer[Display-1][16+i] &lt;&lt; 1) | 0x01;
+        }
     }
-
     temp = (temp &gt;&gt; 1) &amp; 0x7f;
     if( temp == 0x00) 
         temp = 0x80;
 }
 
-void Display(const unsigned char dat[][32])               
-{
-    unsigned char i;
-    for(i = 0; i &lt; 16; i++)
-    {
-        for(int j = 0; j &lt; Display_Num_Word; j++)
-        {
+void Display(const unsigned char dat[][32]){
+    for(unsigned char i = 0; i &lt; 16; i++){
+        for(int j = 0; j &lt; Display_Num_Word; j++){
             digitalWrite( LEDARRAY_G, HIGH );
             int sum = j*2;
             Display_Buffer[sum]    = dat[j][ i ];      
@@ -232,10 +215,8 @@ void Display(const unsigned char dat[][32])
     }   
 }
 
-void Scan_Line( unsigned char m)
-{
-    switch(m)
-    {
+void Scan_Line( unsigned char m){
+    switch(m){
         case 0:
             digitalWrite( LEDARRAY_D, LOW );
             digitalWrite( LEDARRAY_C, LOW );
@@ -336,8 +317,7 @@ void Scan_Line( unsigned char m)
     }
 }
 
-void shiftOutSPI( unsigned char dat ) 
-{
+void shiftOutSPI( unsigned char dat ){
     unsigned char i;
     digitalWrite( STCP_PIN, LOW );
     digitalWrite( STCP_PIN, LOW );

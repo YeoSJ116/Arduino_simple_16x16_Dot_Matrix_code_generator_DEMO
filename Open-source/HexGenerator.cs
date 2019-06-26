@@ -186,18 +186,19 @@ namespace Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO
 
             //Read Me out
             Cod_Out.Text += "// 입력 문자: " + Input_Text.Text + "\r\n";
-            Cod_Out.Text += "// 출력 문자: " + DistinctListBox.Items.Count + "개\r\n";
+            Cod_Out.Text += "// 문자 갯수: " + Input_Text.TextLength + "개\r\n";
+            Cod_Out.Text += "// 폰트 갯수: " + DistinctListBox.Items.Count + "개\r\n";
             Cod_Out.Text += "// 생성 날짜: " + DateTime.Now.ToString("yyyy년 MM월 dd일") + "\r\n\r\n";
 
             //Head print
             Cod_Out.Text += Properties.Resources.Header + enter;
             Cod_Out.Text += "#define Display_Num_Word " + Module.Value + " // Count of module" + enter;
             Cod_Out.Text += "#define Num_Of_Word " + (DistinctListBox.Items.Count) + " // Count of char Word" + enter;
-            Cod_Out.Text += "#define runs " + Speed.Value + " // Fast 900 ~ default 1000 ~ Slow 1100\r\n";
+            Cod_Out.Text += "#define runs " + Speed.Value + " // Fast 200 ~ default 1000 ~ Slow 1100\r\n";
 
             //Hex print (Data)
-            Cod_Out.Text += "unsigned char serial_index = " + (Input_Text.TextLength) + ";\r\n";
-            Cod_Out.Text += "unsigned char DP_Buffer[" + (Input_Text.TextLength) + "] = {" + index + "};\r\n\r\n";
+            Cod_Out.Text += "#define text_count " + (Input_Text.TextLength) + enter;
+            Cod_Out.Text += "unsigned char DP_Buffer[text_count] = {" + index + "};\r\n\r\n";
             
             Cod_Out.Text += "PROGMEM const unsigned char Word[Num_Of_Word][32] = {\r\n";
             for (int i = 0; i < DistinctListBox.Items.Count; i++)

@@ -357,7 +357,7 @@
             0,
             0});
             this.Speed.Minimum = new decimal(new int[] {
-            800,
+            100,
             0,
             0,
             0});
@@ -377,7 +377,7 @@
             this.SpeedLabel.Name = "SpeedLabel";
             this.SpeedLabel.Size = new System.Drawing.Size(53, 12);
             this.SpeedLabel.TabIndex = 6;
-            this.SpeedLabel.Text = "속      도";
+            this.SpeedLabel.Text = "지연속도";
             // 
             // ModuleLabel
             // 

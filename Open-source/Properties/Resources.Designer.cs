@@ -62,21 +62,19 @@ namespace Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO.Properties {
         
         /// <summary>
         ///   
-        ///unsigned char Display_Buffer[ Display_Num_Word * 2 ];
-        ///unsigned char Display_Swap_Buffer[ Display_Num_Word ][ 32 ];
-        ///bool Shift_Bit = 0,            // SPI detail config
-        ///     Flag_Shift = 0;
-        ///unsigned int Timer0_Count = 0, // Count var is must be 0
-        ///             Shift_Count = 0,
+        ///unsigned char Display_Buffer[ Display_Num_Word * 2 ],
+        ///              Display_Swap_Buffer[ Display_Num_Word ][ 32 ];
+        ///bool Shift_Bit = 0;            // SPI detail config
+        ///unsigned int Shift_Count = 0,  // Count var is must be 0
         ///             Display_Word_Count = 0;
         ///unsigned char Message_index = 0;
         ///unsigned char temp = 0x80;
         ///
-        ///void setup()
-        ///{
+        ///void setup(){
         ///    SPI.begin();
         ///    SPI.setBitOrder( LSBFIRST );           // LSBFIRST &lt;-&gt; MSBFIRST
-        ///    SPI.setClockDivider[나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///    SPI.setClockDivider( SPI_CLOCK_DIV2 ); // 16MHz/16 -&gt; 1MHz SCK frequency
+        ///[나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string Footer {
             get {
