@@ -1,5 +1,7 @@
 # Arduino simple 16x16 Dot Matrix code generator DEMO
 
+## Notice: Unless korean Windows or "굴림" font isn't installed, it can't operate normally.
+
 ### Build (Visual studio C# required)
 1. [Download open-source zip file](https://github.com/YeoSJ116/Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO/archive/master.zip)
 2. Unzip this zip file.
