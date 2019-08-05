@@ -62,19 +62,22 @@ namespace Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO.Properties {
         
         /// <summary>
         ///   
-        ///unsigned char Display_Buffer[ Display_Num_Word * 2 ],
-        ///              Display_Swap_Buffer[ Display_Num_Word ][ 32 ];
+        ///byte Display_Buffer[ Display_Num_Word * 2 ],
+        ///     Display_Swap_Buffer[ Display_Num_Word ][ 32 ];
         ///bool Shift_Bit = 0;            // SPI detail config
         ///unsigned int Shift_Count = 0,  // Count var is must be 0
         ///             Display_Word_Count = 0;
-        ///unsigned char Message_index = 0;
-        ///unsigned char temp = 0x80;
+        ///byte Message_index = 0;
+        ///byte temp = 0x80;
         ///
+        ///bool enable_virtual = true;
         ///void setup(){
-        ///    SPI.begin();
-        ///    SPI.setBitOrder( LSBFIRST );           // LSBFIRST &lt;-&gt; MSBFIRST
-        ///    SPI.setClockDivider( SPI_CLOCK_DIV2 ); // 16MHz/16 -&gt; 1MHz SCK frequency
-        ///[나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///    //가상 장치 지원 기능을 비활성화 하고 싶다면
+        ///    //bool enable_virtual = true;을
+        ///    //bool enable_virtual = false;로 변경해 주십시오.
+        ///    if(enable_virtual)
+        ///        Serial.begin(1000000);
+        /// [나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string Footer {
             get {
@@ -87,17 +90,15 @@ namespace Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO.Properties {
         ///#include &lt;avr/pgmspace.h&gt;
         ///#include &lt;SPI.h&gt;
         ///
-        /////SPI PIN Value
-        ///const byte STCP_PIN = 7,  // Latch
-        ///           DS_PIN   = 11, // Data In
-        ///           SHCP_PIN = 13; // CLK
+        /////Shift register pin value (By using SPI communication)
+        /////쉬프트(74HC595N) 레지스터를 SPI 통신으로 제어할때 필요한 핀 번호 입니다.
+        ///const byte STCP_PIN = 7,  // Latch(Storage)상태 1: 쓰기, 0: 적용
+        ///           DS_PIN   = 11, // Data In: CLK 주기에 맞춰 데이터 전송
+        ///           SHCP_PIN = 13; // CLK: 데이터 동기화를 위한 Clock 신호
         ///
-        ///#define LEDARRAY_D 2
-        ///#define LEDARRAY_C 3
-        ///#define LEDARRAY_B 4
-        ///#define LEDARRAY_A 5
-        ///#define LEDARRAY_G 6
-        ///과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///#define LEDARRAY_D 2 //CD4511 디코더 DIN핀: 4bit(0~15)의 4번째 비트
+        ///#define LEDARRAY_C 3 //CD4511 디코더 CIN핀: 4bit(0~15)의 3번째 비트
+        ///#define LEDARRAY_B 4 //CD4511 디코더 BIN핀: [나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string Header {
             get {

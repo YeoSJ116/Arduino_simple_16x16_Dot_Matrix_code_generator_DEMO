@@ -27,7 +27,7 @@ namespace Arduino_simple_16x16_Dot_Matrix_code_generator_DEMO
             InitializeComponent();
             Zoomimg();
             OriginalFresh();
-            LogConsole("배포판 버전 1.0.0");
+            LogConsole("배포판 버전 2.0.0");
         }
 
         // 비트맵 이미지 형식으로 저장하는 함수입니다.

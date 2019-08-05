@@ -119,20 +119,27 @@
   </resheader>
   <data name="Footer" xml:space="preserve">
     <value>
-unsigned char Display_Buffer[ Display_Num_Word * 2 ],
-              Display_Swap_Buffer[ Display_Num_Word ][ 32 ];
+byte Display_Buffer[ Display_Num_Word * 2 ],
+     Display_Swap_Buffer[ Display_Num_Word ][ 32 ];
 bool Shift_Bit = 0;            // SPI detail config
 unsigned int Shift_Count = 0,  // Count var is must be 0
              Display_Word_Count = 0;
-unsigned char Message_index = 0;
-unsigned char temp = 0x80;
+byte Message_index = 0;
+byte temp = 0x80;
 
+bool enable_virtual = true;
 void setup(){
+    //가상 장치 지원 기능을 비활성화 하고 싶다면
+    //bool enable_virtual = true;을
+    //bool enable_virtual = false;로 변경해 주십시오.
+    if(enable_virtual)
+        Serial.begin(1000000);
+    
     SPI.begin();
     SPI.setBitOrder( LSBFIRST );           // LSBFIRST &lt;-&gt; MSBFIRST
     SPI.setClockDivider( SPI_CLOCK_DIV2 ); // 16MHz/16 -&gt; 1MHz SCK frequency
     SPI.setDataMode( SPI_MODE0 );          // Use SPI mode 0
-
+    
     pinMode(LEDARRAY_D, OUTPUT); 
     pinMode(LEDARRAY_C, OUTPUT);
     pinMode(LEDARRAY_B, OUTPUT);
@@ -144,7 +151,9 @@ void setup(){
 }
 
 void loop(){
-    Display( Display_Swap_Buffer );  
+    Display( Display_Swap_Buffer );
+    if(enable_virtual)
+        virtual_display( Display_Swap_Buffer );
     Calc_Shift( Display_Num_Word,DP_Buffer );
     Shift_Count++;
 
@@ -156,12 +165,10 @@ void loop(){
 }
 
 void Clear_Display(){
-    for(unsigned char j = 0; j &lt; Display_Num_Word; j++)
-        for(unsigned char i = 0 ; i &lt; 32 ;i++)
-            Display_Swap_Buffer[j][i] = 0xFF;
+    memset(Display_Swap_Buffer[0], 0xFF, Display_Num_Word * 32);
 }
 
-void Calc_Shift(unsigned int Display, unsigned char sendingBuffer[200]){
+void Calc_Shift(unsigned int Display, byte sendingBuffer[200]){
     for(unsigned char i = 0; i &lt; 16; i++){
         if((Display_Swap_Buffer[0][16+i]&amp;0x80) == 0)
             Display_Swap_Buffer[0][i] = ( Display_Swap_Buffer[0][i] &lt;&lt; 1 ) &amp; 0xfe;
@@ -197,11 +204,16 @@ void Calc_Shift(unsigned int Display, unsigned char sendingBuffer[200]){
     if( temp == 0x00) 
         temp = 0x80;
 }
+void virtual_display(const byte dat[][32]){
+  for(int i = 0; i &lt; 32; i++)
+    for(int j = 0; j &lt; Display_Num_Word; j++)
+      Serial.write((dat[j][i]));
+}
 
 void Display(const unsigned char dat[][32]){
     for(unsigned char i = 0; i &lt; 16; i++){
+        digitalWrite( LEDARRAY_G, HIGH );
         for(int j = 0; j &lt; Display_Num_Word; j++){
-            digitalWrite( LEDARRAY_G, HIGH );
             int sum = j*2;
             Display_Buffer[sum]    = dat[j][ i ];      
             Display_Buffer[sum+1]  = dat[j][ i+16 ];
@@ -211,120 +223,23 @@ void Display(const unsigned char dat[][32]){
 
         Scan_Line( i );
         digitalWrite( LEDARRAY_G, LOW );
-        delayMicroseconds( runs );                  
+        delayMicroseconds( runs );
     }   
 }
 
+//디코더 열(Column) 제어
 void Scan_Line( unsigned char m){
-    switch(m){
-        case 0:
-            digitalWrite( LEDARRAY_D, LOW );
-            digitalWrite( LEDARRAY_C, LOW );
-            digitalWrite( LEDARRAY_B, LOW );
-            digitalWrite( LEDARRAY_A, LOW );
-            break;
-        case 1:
-            digitalWrite( LEDARRAY_D, LOW );
-            digitalWrite( LEDARRAY_C, LOW );
-            digitalWrite( LEDARRAY_B, LOW );
-            digitalWrite( LEDARRAY_A, HIGH);
-            break;
-        case 2:
-            digitalWrite( LEDARRAY_D, LOW );
-            digitalWrite( LEDARRAY_C, LOW );
-            digitalWrite( LEDARRAY_B, HIGH);
-            digitalWrite( LEDARRAY_A, LOW );
-            break;
-        case 3:
-            digitalWrite( LEDARRAY_D, LOW );
-            digitalWrite( LEDARRAY_C, LOW );
-            digitalWrite( LEDARRAY_B, HIGH);
-            digitalWrite( LEDARRAY_A, HIGH);
-            break;
-        case 4:
-            digitalWrite( LEDARRAY_D, LOW );
-            digitalWrite( LEDARRAY_C, HIGH);
-            digitalWrite( LEDARRAY_B, LOW );
-            digitalWrite( LEDARRAY_A, LOW );
-            break;
-        case 5:
-            digitalWrite( LEDARRAY_D, LOW );
-            digitalWrite( LEDARRAY_C, HIGH);
-            digitalWrite( LEDARRAY_B, LOW );
-            digitalWrite( LEDARRAY_A, HIGH);
-            break;
-        case 6:
-            digitalWrite( LEDARRAY_D, LOW );
-            digitalWrite( LEDARRAY_C, HIGH);
-            digitalWrite( LEDARRAY_B, HIGH);
-            digitalWrite( LEDARRAY_A, LOW );
-            break;
-        case 7:
-            digitalWrite( LEDARRAY_D, LOW );
-            digitalWrite( LEDARRAY_C, HIGH);
-            digitalWrite( LEDARRAY_B, HIGH);
-            digitalWrite( LEDARRAY_A, HIGH);
-            break;
-        case 8:
-            digitalWrite( LEDARRAY_D, HIGH);
-            digitalWrite( LEDARRAY_C, LOW );
-            digitalWrite( LEDARRAY_B, LOW );
-            digitalWrite( LEDARRAY_A, LOW );
-            break;
-        case 9:
-            digitalWrite( LEDARRAY_D, HIGH);
-            digitalWrite( LEDARRAY_C, LOW );
-            digitalWrite( LEDARRAY_B, LOW );
-            digitalWrite( LEDARRAY_A, HIGH);
-            break;
-        case 10:
-            digitalWrite( LEDARRAY_D, HIGH);
-            digitalWrite( LEDARRAY_C, LOW );
-            digitalWrite( LEDARRAY_B, HIGH);
-            digitalWrite( LEDARRAY_A, LOW );
-            break;
-        case 11:
-            digitalWrite( LEDARRAY_D, HIGH);
-            digitalWrite( LEDARRAY_C, LOW );
-            digitalWrite( LEDARRAY_B, HIGH);
-            digitalWrite( LEDARRAY_A, HIGH);       
-            break;
-        case 12:
-            digitalWrite( LEDARRAY_D, HIGH);
-            digitalWrite( LEDARRAY_C, HIGH);
-            digitalWrite( LEDARRAY_B, LOW );
-            digitalWrite( LEDARRAY_A, LOW );       
-            break;
-        case 13:
-            digitalWrite( LEDARRAY_D, HIGH);
-            digitalWrite( LEDARRAY_C, HIGH);
-            digitalWrite( LEDARRAY_B, LOW );
-            digitalWrite( LEDARRAY_A, HIGH);
-            break;
-        case 14:
-            digitalWrite( LEDARRAY_D, HIGH);
-            digitalWrite( LEDARRAY_C, HIGH);
-            digitalWrite( LEDARRAY_B, HIGH);
-            digitalWrite( LEDARRAY_A, LOW );
-            break;
-        case 15:
-            digitalWrite( LEDARRAY_D, HIGH);
-            digitalWrite( LEDARRAY_C, HIGH);
-            digitalWrite( LEDARRAY_B, HIGH);
-            digitalWrite( LEDARRAY_A, HIGH);
-            break;
-        default : break;
-    }
+    digitalWrite( LEDARRAY_D, (m &amp; (1&lt;&lt;3)) != 0 ); // m = 3 =&gt; 0
+    digitalWrite( LEDARRAY_C, (m &amp; (1&lt;&lt;2)) != 0 ); // m = 3 =&gt; 0
+    digitalWrite( LEDARRAY_B, (m &amp; (1&lt;&lt;1)) != 0 ); // m = 3 =&gt; 1
+    digitalWrite( LEDARRAY_A, (m &amp; (1&lt;&lt;0)) != 0 ); // m = 3 =&gt; 1
 }
 
-void shiftOutSPI( unsigned char dat ){
-    unsigned char i;
-    digitalWrite( STCP_PIN, LOW );
-    digitalWrite( STCP_PIN, LOW );
-
-    SPI.transfer( dat );
-    digitalWrite( STCP_PIN, HIGH);
-    digitalWrite( STCP_PIN, LOW );
+void shiftOutSPI( byte dat ){
+    //Latch open &gt;&gt; data in &gt;&gt; Latch close
+    digitalWrite( STCP_PIN, LOW ); //전송 가능한 상태
+    SPI.transfer( dat );           //데이터 전송
+    digitalWrite( STCP_PIN, HIGH); //더이상 데이터를 받지 않고 데이터 적용
 }</value>
   </data>
   <data name="Header" xml:space="preserve">
@@ -332,16 +247,17 @@ void shiftOutSPI( unsigned char dat ){
 #include &lt;avr/pgmspace.h&gt;
 #include &lt;SPI.h&gt;
 
-//SPI PIN Value
-const byte STCP_PIN = 7,  // Latch
-           DS_PIN   = 11, // Data In
-           SHCP_PIN = 13; // CLK
+//Shift register pin value (By using SPI communication)
+//쉬프트(74HC595N) 레지스터를 SPI 통신으로 제어할때 필요한 핀 번호 입니다.
+const byte STCP_PIN = 7,  // Latch(Storage)상태 1: 쓰기, 0: 적용
+           DS_PIN   = 11, // Data In: CLK 주기에 맞춰 데이터 전송
+           SHCP_PIN = 13; // CLK: 데이터 동기화를 위한 Clock 신호
 
-#define LEDARRAY_D 2
-#define LEDARRAY_C 3
-#define LEDARRAY_B 4
-#define LEDARRAY_A 5
-#define LEDARRAY_G 6
+#define LEDARRAY_D 2 //CD4511 디코더 DIN핀: 4bit(0~15)의 4번째 비트
+#define LEDARRAY_C 3 //CD4511 디코더 CIN핀: 4bit(0~15)의 3번째 비트
+#define LEDARRAY_B 4 //CD4511 디코더 BIN핀: 4bit(0~15)의 2번째 비트
+#define LEDARRAY_A 5 //CD4511 디코더 AIN핀: 4bit(0~15)의 1번째 비트
+#define LEDARRAY_G 6 //74HC595N 레지스터 OE핀: 전체 전원 제어 1: 꺼짐, 0: 켜짐
 </value>
   </data>
 </root>
